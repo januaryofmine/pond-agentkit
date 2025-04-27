@@ -4,11 +4,10 @@ version = "0.1.0"
 description = ""
 authors = ["Your Name <you@example.com>"]
 
-coinbase_agentkit = {path = "./coinbase_agentkit", develop = true}
-
-
 [tool.poetry.dependencies]
 python = "^3.10"
+coinbase_agentkit = {path = "./coinbase_agentkit", develop = true}
+
 
 [build-system]
 requires = ["poetry-core"]
