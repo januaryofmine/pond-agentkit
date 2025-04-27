@@ -24,7 +24,7 @@ class PondActionProvider(ActionProvider):
     }
 
     def __init__(self, api_url: str, api_key: str):
-        super().__init__("pond_ai", tools=[])
+        super().__init__("pond_ai")
         self.api_url = api_url
         self.api_key = api_key
 
