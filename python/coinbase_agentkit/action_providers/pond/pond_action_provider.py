@@ -24,7 +24,7 @@ class PondActionProvider(ActionProvider):
     }
 
     def __init__(self, api_url: str, api_key: str):
-        super().__init__(name="pond_ai", action_providers=[])  #
+        super().__init__(name="pond_ai", action_providers=[])
         self.api_url = api_url
         self.api_key = api_key
 
@@ -36,7 +36,6 @@ class PondActionProvider(ActionProvider):
             prompt = input.input
 
             headers = {
-                "Authorization": f"Bearer {self.api_key}",
                 "Content-Type": "application/json"
             }
 
@@ -84,11 +83,12 @@ The summary includes token flows, transaction behavior, and interaction patterns
             model_id = self.DURATION_MODEL_MAP[validated_args.duration_months]
 
             headers = {
-                'Content-Type': 'application/json',
-                'Authorization': self.api_key
+                'Content-Type': 'application/json'
             }
             payload = {
                 "model_id": model_id,
+                "req_type": "predict",
+                "access_token": self.api_key,
                 "input_keys": [validated_args.address]
             }
 
