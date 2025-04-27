@@ -4,11 +4,13 @@ import os
 import json
 import requests 
 from typing import Optional, Any
-from coinbase_agentkit.types import ActionProvider, ActionInput, ActionOutput
+# from coinbase_agentkit.types import ActionProvider, ActionInput, ActionOutput
 from coinbase_agentkit.network import Network
 from .schemas import BaseWalletSummarySchema
 from ..action_decorator import create_action
 
+from coinbase_agentkit.action_providers.action_provider import ActionProvider
+from coinbase_agentkit.types import ActionInput, ActionOutput
 
 class PondActionProvider(ActionProvider):
     """Action provider for interacting with POND AI AGENTS."""
