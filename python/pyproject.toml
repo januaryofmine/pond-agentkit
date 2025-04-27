@@ -4,7 +4,8 @@ version = "0.1.0"
 description = ""
 authors = ["Your Name <you@example.com>"]
 
-packages = [{include = "coinbase_agentkit"}]  # <-- THIS LINE IS VERY IMPORTANT
+coinbase_agentkit = {path = "./coinbase_agentkit", develop = true}
+
 
 [tool.poetry.dependencies]
 python = "^3.10"
