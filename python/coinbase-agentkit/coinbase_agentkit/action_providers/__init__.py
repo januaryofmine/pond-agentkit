@@ -29,6 +29,8 @@ from .wallet.wallet_action_provider import WalletActionProvider, wallet_action_p
 from .weth.weth_action_provider import WethActionProvider, weth_action_provider
 from .wow.wow_action_provider import WowActionProvider, wow_action_provider
 
+from .pond.pond_action_provider import PondActionProvider, pond_action_provider
+
 __all__ = [
     "Action",
     "ActionProvider",
@@ -67,4 +69,6 @@ __all__ = [
     "weth_action_provider",
     "WowActionProvider",
     "wow_action_provider",
+    "PondActionProvider",
+    "pond_action_provider",
 ]
