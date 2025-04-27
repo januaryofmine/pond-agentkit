@@ -1,0 +1,16 @@
+[project]
+name = "pond-cdp-chatbot"
+version = "0.1.0"
+description = "Example chatbot connecting Coinbase AgentKit with Pond AI Agents."
+authors = [{ name = "Your Name or Team" }]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<4.0"
+coinbase-agentkit = "*"   # Assuming you install agentkit locally
+langchain = "*"
+python-dotenv = "*"
+requests = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
