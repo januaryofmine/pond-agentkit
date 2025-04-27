@@ -1,4 +1,4 @@
-"""Schemas for Allora action provider."""
+"""Schemas for Pond action provider."""
 
 from pydantic import BaseModel, Field
 
