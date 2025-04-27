@@ -17,7 +17,8 @@ from coinbase_agentkit import (
     weth_action_provider,
 )
 
-from coinbase_agentkit.action_providers.pond import pond_action_provider
+from coinbase_agentkit.action_providers.pond.pond_action_provider import pond_action_provider
+
 from coinbase_agentkit_langchain import get_langchain_tools
 from dotenv import load_dotenv
 from langchain_core.messages import HumanMessage
