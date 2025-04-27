@@ -96,31 +96,50 @@ The summary includes token flows, transaction behavior, and interaction patterns
             response.raise_for_status()
             data = response.json()
 
-            if data.get("code") == 200 and data.get("data"):
-                result = data["data"][0]
+            # Check for successful response based on the curl example
+            if data.get("code") == 200 and data.get("resp_items"):
+                result = data["resp_items"][0]
                 address = result.get("input_key", "N/A")
                 updated_at = result.get("debug_info", {}).get("UPDATED_AT", "N/A")
                 analysis = result.get("analysis_result", {})
 
-                summary_lines = [f"Wallet Address: {address}",
-                                f"Summary Duration: {validated_args.duration_months} months",
-                                f"Feature Updated At: {updated_at}",
-                                "",
-                                "Key Metrics:"]
+                if not analysis:
+                    return f"No analysis data available for address: {address}"
+
+                summary_lines = [
+                    f"Wallet Address: {address}",
+                    f"Summary Duration: {validated_args.duration_months} months",
+                    f"Feature Updated At: {updated_at}",
+                    "",
+                    "Key Metrics:"
+                ]
+
+                # Improved key formatting and handling potential missing keys
                 for key, val in analysis.items():
-                    pretty_key = key.replace("BASE_", "").replace("_FOR_360DAYS", "").replace("_USER_", " ").replace("_", " ").title()
+                    # Skip if value is None
+                    if val is None:
+                        continue
+
+                    # Improve key readability
+                    pretty_key = (
+                        key.replace("BASE_", "")
+                            .replace("_FOR_90DAYS", "")
+                            .replace("_USER_", " ")
+                            .replace("_", " ")
+                            .title()
+                    )
                     summary_lines.append(f"- {pretty_key}: {val}")
 
                 return "\n".join(summary_lines)
             else:
-                return f"Error: Unexpected API response: {data}"
+                return f"Error: Unexpected API response. Code: {data.get('code')}, Message: {data.get('msg', 'No message')}"
 
         except requests.exceptions.RequestException as e:
-            return f"Error: Failed to connect to POND API: {str(e)}"
+            return f"Error: Network request failed - {str(e)}"
         except json.JSONDecodeError as e:
-            return f"Error: Invalid JSON response from POND API: {str(e)}"
+            return f"Error: Invalid JSON response from POND API - {str(e)}"
         except Exception as e:
-            return f"Error: Unexpected failure while fetching wallet summary: {str(e)}"
+            return f"Error: Unexpected failure while fetching wallet summary - {str(e)}"
 
 def pond_action_provider(
     api_url: Optional[str] = None,
@@ -131,7 +150,7 @@ def pond_action_provider(
     - api_url: Your gateway endpoint
     - api_key: API key issued to developers
     """
-    api_url = api_url or os.getenv("POND_AI_API_URL")
+    api_url = api_url or os.getenv("POND_AI_API_URL", "https://broker-service.private.cryptopond.xyz/predict")
     api_key = api_key or os.getenv("POND_AI_API_KEY")
 
     if not api_url or not api_key:
